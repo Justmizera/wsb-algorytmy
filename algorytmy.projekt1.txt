@@ -1,0 +1,202 @@
+using System;
+using System.Diagnostics;
+
+namespace projekt.algorytmy
+{
+    class Program
+    {
+        static void tablicauporzadkowana(int a)
+        {
+            int elementytab = a;
+            int[] tablica = new int[elementytab];
+            int i = 0;
+            for (i = 0; i < tablica.Length; i++)
+            {
+                tablica[i] = i;
+
+            }
+        }
+
+        // zliczanie operacji
+        private static int zliczanieoperacji(int f, int element)
+        { int zliczanie = 0;
+            int[] tablica = new int[f];
+
+            for (int i = 0; i < tablica.Length; i++)
+            {
+                tablica[i] = i;
+            }
+            for (int a = 0; a < tablica.Length; a++)
+            {
+                if (tablica[a] == element)
+                {
+                   
+                    zliczanie = zliczanie +1;
+                    return zliczanie;
+                }
+                else
+                {
+                    zliczanie = zliczanie + 1;
+                }                
+            }
+            return zliczanie;
+        }
+
+        private static int SimpleSearch(int[] tab, int element)
+        {
+            for (int a = 0; a < tab.Length; a++)
+            {
+                if (tab[a] == element)
+                {
+                    return a;
+                    // Console.WriteLine(a);
+                    //break;
+                }
+            }
+
+            return -1;
+        }
+
+        // liczenie czasu dla algorytmu liniowego
+
+        public static long liczenieczasu(int a, int c)
+        {
+            int elementytab = a;
+
+            int[] tablica = new int[elementytab];
+            
+            for (int i = 0; i < tablica.Length; i++)
+            {
+                tablica[i] = i;
+            }
+            
+            int d = c;
+            Stopwatch stoper = new Stopwatch();
+            stoper.Reset();
+            stoper.Start();
+            SimpleSearch(tablica, d);
+            stoper.Stop();
+
+            long  czas = stoper.ElapsedTicks;
+            return czas;           
+        }
+        // liczenie czasu przeszukiwanie binarne
+        public static long liczenieczasubin(int a, int c)
+        {
+            int elementytab = a;
+
+            int[] tablica = new int[elementytab];
+
+            for (int i = 0; i < tablica.Length; i++)
+            {
+                tablica[i] = i;
+            }
+
+            int d = c;
+            Stopwatch stoper = new Stopwatch();
+            stoper.Reset();
+            stoper.Start();
+            BinarySearch(tablica, d);
+            stoper.Stop();
+
+            long czas = stoper.ElapsedTicks;
+            return czas;
+        }
+        //przeszukiwanie binarne
+        private static int BinarySearch(int[] tab, int element)
+        {
+            int left = 0;
+            int right = tab.Length - 1;
+            int mid;
+            while (left <= right)
+            {
+                mid = (right + left) / 2;
+                if (tab[mid] == element) return mid;
+                else if (tab[mid] < element) left = mid + 1;
+                else right = mid - 1;
+            }
+
+            return -1;
+        }
+
+        //zliczanie operacji algorytm binarny
+        private static int binzliczanieoperacji(int a, int element)
+                
+         {
+            int zliczaniebin = 0;
+            int[] tab = new int[a];
+            for (int i = 0; i < a; i++)
+            {
+                tab[i] = i;
+            }
+
+            int left = 0;
+            int right = tab.Length - 1;
+            int mid;
+
+            while (left <= right)
+            {              
+                zliczaniebin = zliczaniebin + 1; 
+                mid = (right + left) / 2;
+                if (tab[mid] == element)
+                {
+                    return zliczaniebin;
+                }
+                else if (tab[mid] < element) left = mid + 1;
+                else right = mid - 1;
+            }
+            return zliczaniebin;
+        }
+
+
+        static void Main(string[] args)
+        {/* czas dla przypadku pesyministycznego
+            liczenieczasu(2000000, -1);*/
+
+            //czas dla przypadku średniego
+
+            /*long a = liczenieczasu(222498308, 0);
+            long b = liczenieczasu(222498308, -1);
+
+               long sredniczas = (a + b) / 2;
+               Console.WriteLine(sredniczas);*/
+
+            //zliczanie operacji dla przypadku średniego
+
+            /*            int d = zliczanieoperacji(268435456, 0);
+                        int c = zliczanieoperacji(268435456, -1);
+
+                        int sredni = (d + c) / 2;
+
+                        Console.WriteLine(sredni);*/
+                        // zliczanie operacji dla wyszukiwania binarnego dla przypadku średniego
+           // int a = binzliczanieoperacji(1583279, -1);
+          //  int b = binzliczanieoperacji(894251, (894251 - 1)/2);
+            //int sredni = (a + b) / 2;
+          //  Console.WriteLine(a);     
+          
+          // zliczanie czasu dla algorytmu binarnego przypadek pesymistyczny
+
+        //  long a = liczenieczasubin(268435456,-1);
+
+        
+          // zliczanie czasu dla algorytmu binarnego przypadek średni
+          Random rnd = new Random();
+          int d=0;
+          long czas=0;
+          int i= 259248026;
+          for(int c= 0;c<30; c++)
+          {  d= rnd.Next(i-1);
+          long a = liczenieczasubin(i,d);
+           czas = czas + a;        
+          }
+          long srednia = czas/30;
+
+          Console.WriteLine(czas);
+           Console.WriteLine(i);
+            Console.WriteLine(srednia);
+            Console.ReadKey();
+
+        }
+    }
+}
